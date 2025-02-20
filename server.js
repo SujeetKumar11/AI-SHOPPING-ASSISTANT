@@ -1,11 +1,18 @@
 const express = require("express");
 const cors = require("cors");
+const fetch = require("node-fetch"); // Required for making API requests
 require("dotenv").config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-app.use(cors());
+// ✅ CORS Configuration (Allow only your frontend)
+app.use(cors({
+    origin: "https://67b7b0149c941b83d6f6c3aa--cozy-peony-2d6608.netlify.app/", // Your frontend URL
+    methods: "GET,POST",
+    allowedHeaders: "Content-Type"
+}));
+
 app.use(express.json());
 app.use(express.static("public")); // Serve frontend files
 
@@ -48,4 +55,5 @@ app.post("/api/gemini", async (req, res) => {
     }
 });
 
+// ✅ Start Server
 app.listen(port, () => console.log(`🚀 Server running on http://localhost:${port}`));
